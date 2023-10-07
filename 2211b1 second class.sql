@@ -188,6 +188,99 @@ select std_name, std_class, std_city, std_marks, if (std_marks > 700, 'Good Perf
 
 
 
+select * from students1;
+
+create view stud as select std_name,std_class,std_city from students1;
+
+select * from stud;
+
+
+
+create index students on students1(std_city);
+
+show indexes from students1;
+
+explain select * from students1;
+
+
+
+create table admission(admission_id int, student_name varchar(200), admission_year int)
+partition by range(admission_year)(
+partition p0 values less than (2012),
+partition p1 values less than (2013),
+partition p2 values less than (2014),
+partition p3 values less than (2015),
+partition p4 values less than (2016));
+
+
+
+insert into admission values 
+(1,'Arif',2012),
+(2,'Sabir',2013),
+(3,'Hina',2013),
+(4,'Safdar',2015),
+(5,'Amjad',2014),
+(6,'Atif',2013),
+(7,'Ayesha',2015),
+(8,'Urooda',2015),
+(9,'Taha',2014),
+(10,'Ramsha',2013),
+(11,'Shaheer',2012),
+(12,'Aliyan',2015),
+(13,'John Wick',2013),
+(14,'Hamza',2014);
+
+
+select * from admission partition(p1);
+
+
+
+SELECT 
+  PARTITION_NAME, SUBPARTITION_NAME, PARTITION_ORDINAL_POSITION, SUBPARTITION_ORDINAL_POSITION, PARTITION_METHOD, 
+  SUBPARTITION_METHOD, PARTITION_EXPRESSION, SUBPARTITION_EXPRESSION, TABLE_ROWS
+FROM 
+  INFORMATION_SCHEMA.PARTITIONS
+WHERE 
+  TABLE_NAME = 'admission';
+
+
+
+
+
+
+
+
+
+
+select * from admission;
+
+
+
+
+
+
+-- drop table orders;
+
+
+
+
+
+create table customers (customer_id int primary key auto_increment, customer_name varchar(200), product_price int, city varchar(200));
+
+select * from customers;
+
+
+select avg(product_price) from customers;
+
+select customer_name, city, product_price from customers where product_price > (select avg(product_price) from customers);
+
+
+
+
+
+
+
+
 
 
 
